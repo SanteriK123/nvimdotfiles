@@ -24,11 +24,10 @@ nmap("<leader>xl", "<cmd>trouble loclist toggle<cr>")
 nmap("<leader>cl", "<cmd>trouble lsp toggle<cr>")
 
 -- Movement
-nmap("o", "{")
-nmap("m", "}")
+nmap("å", "{")
+nmap("ö", "}")
 nmap("+", "$")
 
 -- Selection
 nmap("<leader>a", "ggVG") -- Select all
 nmap("<leader>r", ":%s///g<LEFT><LEFT>") -- quick SED
-nmap("r", "<C-r>") -- Redo

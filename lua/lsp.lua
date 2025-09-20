@@ -36,63 +36,32 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-on_attach = function(client, bufnr)
-  --client.server_capabilities.semanticTokensProvider = nil
-  -- if client.server_capabilities.inlayHintProvider then
-  --   vim.lsp.inlay_hint.enable(buf, true)
-  -- end
-end
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
--- LSP setups
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local lsp = require("lspconfig")
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("pyright")
 
-lsp.rust_analyzer.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-lsp.pyright.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-lsp.clangd.setup({
+vim.lsp.config("clangd", {
   cmd = { "clangd", "--completion-style=detailed" },
-  capabilities = capabilities,
-  on_attach = on_attach,
 })
-lsp.gopls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-lsp.ts_ls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-lsp.svelte.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-lsp.html.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-lsp.omnisharp.setup({
+vim.lsp.enable("clangd")
+
+vim.lsp.enable("ts_ls")
+
+vim.lsp.enable("html")
+
+vim.lsp.config("omnisharp", {
   cmd = { "omnisharp" },
-  capabilities = capabilities,
-  on_attach = on_attach,
 })
-lsp.tinymist.setup({
+vim.lsp.enable("omnisharp")
+
+vim.lsp.config("tinymist", {
   settings = {
     exportPdf = "onSave"
   },
-  capabilities = capabilities,
-  on_attach = on_attach,
 })
-
-lsp.gdscript.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
+vim.lsp.enable("tinymist")
+vim.lsp.enable("gdscript")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 
