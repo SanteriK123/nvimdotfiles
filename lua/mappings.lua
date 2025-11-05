@@ -1,33 +1,32 @@
-function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
-end
-
-function nmap(shortcut, command)
-  map("n", shortcut, command)
-end
-
-function imap(shortcut, command)
-  map("i", shortcut, command)
-end
-
+-- Set leader keys
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
-nmap("<leader>ff", '<cmd>lua require("telescope.builtin").find_files()<cr>')
-nmap("<leader>fg", '<cmd>lua require("telescope.builtin").live_grep()<cr>')
-nmap("<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<cr>')
-nmap("<leader>fh", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
+-- Helper alias for cleaner mapping
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
-nmap("<leader>xx", "<cmd>Trouble diagnostics toggle<cr>")
-nmap("<leader>xq", "<cmd>Trouble qflist toggle<cr>")
-nmap("<leader>xl", "<cmd>trouble loclist toggle<cr>")
-nmap("<leader>cl", "<cmd>trouble lsp toggle<cr>")
+-- Telescope
+map("n", "<leader>ff", require("telescope.builtin").find_files, opts)
+map("n", "<leader>fg", require("telescope.builtin").live_grep, opts)
+map("n", "<leader>fb", require("telescope.builtin").buffers, opts)
+map("n", "<leader>fh", require("telescope.builtin").help_tags, opts)
+
+-- Trouble
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", opts)
+map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", opts)
+map("n", "<leader>xl", "<cmd>trouble loclist toggle<cr>", opts)
+map("n", "<leader>cl", "<cmd>trouble lsp toggle<cr>", opts)
 
 -- Movement
-nmap("å", "{")
-nmap("ö", "}")
-nmap("+", "$")
+map("n", "å", "{", opts)
+map("n", "ö", "}", opts)
+map({ "n", "v" }, "+", "$", opts) -- ✅ works in both normal + visual mode
 
 -- Selection
-nmap("<leader>a", "ggVG") -- Select all
-nmap("<leader>r", ":%s///g<LEFT><LEFT>") -- quick SED
+map("n", "<leader>a", "ggVG", opts) -- Select all
+map("n", "<leader>r", ":%s///g<LEFT><LEFT>", opts) -- quick SED
+
+-- Clear search highlight
+map("n", "<leader>cl", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight", noremap = true, silent = true })
+
