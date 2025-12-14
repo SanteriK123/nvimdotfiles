@@ -30,4 +30,5 @@ require("lazy").setup({
   require("plugins.autopairs"),
   require("plugins.telescope"),
   require("plugins.trouble"),
+  require("plugins.nvim-surround"),
 })
